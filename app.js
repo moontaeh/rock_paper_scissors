@@ -16,61 +16,82 @@ const getHumanChoice = () => {
     return prompt("Please choose:\nRock, Paper or Scissors?")
 }
 
-const playGame = () => {
-    let humanScore = 0;
-    let computerScore = 0;
+const rockBtn = document.querySelector("#rock-btn");
+const paperBtn = document.querySelector("#paper-btn");
+const scissorsBtn = document.querySelector("#scissors-btn");
+const resultDiv = document.querySelector("#result");
+const playerScoreDisplay = document.querySelector("#player-score");
+const computerScoreDisplay = document.querySelector("#computer-score");
 
-    const playRound = (humanChoice, computerChoice) => {
-        humanChoice = humanChoice.toLowerCase();
-        
-        if(humanChoice === computerChoice){
-            console.log("You tie!");
-        } else {
-            switch(humanChoice){
-                case "rock":{
-                    if(computerChoice === "paper"){
-                        console.log("You lose!");
-                        computerScore++;
-                    } else if(computerChoice === "scissors") {
-                        console.log("You win!");
-                        humanScore++;
-                    }
-                    break;
+let humanScore = 0;
+let computerScore = 0;
+
+playerScoreDisplay.textContent += `${humanScore}`;
+computerScoreDisplay.textContent += `${computerScore}`;
+
+const playRound = (humanChoice, computerChoice) => {
+    
+    if(humanChoice === computerChoice){
+        resultDiv.textContent = "You tie!";
+    } else {
+        switch(humanChoice){
+            case "rock":{
+                if(computerChoice === "paper"){
+                    resultDiv.textContent = "You lose!";
+                    computerScore++;
+                } else if(computerChoice === "scissors") {
+                    resultDiv.textContent = "You win!";
+                    humanScore++;
                 }
-                case "paper":{
-                    if(computerChoice === "scissors"){
-                        console.log("You lose!");
-                        computerScore++;
-                    } else if(computerChoice === "rock") {
-                        console.log("You win!");
-                        humanScore++;
-                    }
-                    break;
+                break;
+            }
+            case "paper":{
+                if(computerChoice === "scissors"){
+                    resultDiv.textContent = "You lose!";
+                    computerScore++;
+                } else if(computerChoice === "rock") {
+                    resultDiv.textContent = "You win!";
+                    humanScore++;
                 }
-                case "scissors":{
-                    if(computerChoice === "rock"){
-                        console.log("You lose!");
-                        computerScore++;
-                    } else if(computerChoice === "paper") {
-                        console.log("You win!");
-                        humanScore++;
-                    }
-                    break;
+                break;
+            }
+            case "scissors":{
+                if(computerChoice === "rock"){
+                    resultDiv.textContent = "You lose!";
+                    computerScore++;
+                } else if(computerChoice === "paper") {
+                    resultDiv.textContent = "You win!";
+                    humanScore++;
                 }
-                default:{
-                    console.log("Invalid choice!");
-                }
+                break;
+            }
+            default:{
+                resultDiv.textContent = "Invalid choice!";
             }
         }
-
-        console.log("You chose ", humanChoice, ", the Computer chose ", computerChoice);
-        console.log("Your score: ", humanScore," | Computer score: ", computerScore)
+        playerScoreDisplay.textContent = `You : ${humanScore}`
+        computerScoreDisplay.textContent = `Computer : ${computerScore}`
+        
     }
 
-    for(let i = 0; i < 5; i++){
-        playRound(getHumanChoice(), getComputerChoice());
-    }
+    resultDiv.innerHTML += "<br>You chose " + humanChoice + ", the Computer chose " + computerChoice + ".";
 
+    if(humanScore == 5){
+        resultDiv.innerHTML += "<br><br>Congratulations! You won!"
+    }
+    if(computerScore == 5){
+        resultDiv.innerHTML += "<br><br>Computer wins the game! Try again next time."
+    }
 }
 
-playGame();
+rockBtn.addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+})
+    
+paperBtn.addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+})
+
+scissorsBtn.addEventListener("click", () => {
+    playRound("scissors", getComputerChoice());
+})
