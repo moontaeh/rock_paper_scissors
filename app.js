@@ -78,9 +78,13 @@ const playRound = (humanChoice, computerChoice) => {
 
     if(humanScore == 5){
         resultDiv.innerHTML += "<br><br>Congratulations! You won!"
+        humanScore = 0;
+        computerScore = 0;
     }
     if(computerScore == 5){
         resultDiv.innerHTML += "<br><br>Computer wins the game! Try again next time."
+        humanScore = 0;
+        computerScore = 0;
     }
 }
 
